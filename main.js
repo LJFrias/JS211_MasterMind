@@ -28,13 +28,58 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const generateHint = () =>  {
+const generateHint = (guess) =>  {
   // your code here
+  let solutionArray = solution.split('') //solution.split ['a', 'b', 'c', 'd']
+  let guessArray = guess.split('')       //guess.split ['a', 'd', 'b', 'c']
+  let correctLetterLocations = 0         
+  let correctLetters = 0
+
+//compare the values at each index with a for loop
+ for(let i=0; i < solutionArray.length; i++){
+    if(solutionArray[i] === guessArray[i]){
+      correctLetterLocations++
+      solutionArray[i] = null
+    }
+ }
+
+ for(let i=0; i < solutionArray.length; i++){
+  let targetIndex = solutionArray.indexOf(guessArray[i])
+    if(targetIndex > -1){
+      correctLetters++
+      solutionArray[targetIndex] = null
+    }
+
+    
+ }
+
+ return `${correctLetterLocations}-${correctLetters}`
+
+
 }
 
 const mastermind = (guess) => {
-  solution = 'abcd'; // Comment this out to generate a random solution
+  // solution = 'abcd'; // Comment this out to generate a random solution
   // your code here
+  let hint = generateHint(guess)
+  board.push(`${guess} : ${hint}`)
+  
+  if(guess === solution){
+    console.log("You guessed it")
+    return "You guessed it!"
+  }
+
+
+  if(board.length >9){
+    console.log(`You have ran out of guesses. The solution is: ${solution}`)
+    return `You have ran out of guesses. The solution is: ${solution}`
+  }
+  else {
+    console.log("Guess Again.")
+    return "Guess Again."
+  }
+
+
 }
 
 
